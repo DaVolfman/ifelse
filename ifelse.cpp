@@ -27,6 +27,8 @@ int main(int argc, char** argv){
 	
 	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "IE");
 	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "I");
+	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "IS");
+	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "IES");
 
 	myPDA.addTransitionFunction("q_1", 'f', 'I', "q_1", NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_1", 'f', 'I', "q_1", "S");
@@ -46,6 +48,8 @@ int main(int argc, char** argv){
 	
 	while( ! file.eof() ){
 		getline(file, expression);
+		if(expression[expression.length()-1] == '\r')
+			expression = expression.substr(0,expression.length()-1);
 		if(myPDA.is_in_language(expression)){
 			cout << "Correct sequence" << endl;
 		}else{

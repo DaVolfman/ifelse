@@ -4,12 +4,12 @@
 #include <string>
 #include <map>
 
-/*
+
 //only used if needed for primitve debug
 #include <iostream>
 using std::cerr;
 using std::endl;
-*/
+
 
 using std::string;
 using std::multimap;
@@ -86,7 +86,7 @@ class NDPDA {
 			if( count > 0){
 				for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
 					changes = iter->second;
-					if(changes.state == finalState and input.empty())
+					if(changes.state == finalState)
 						return true;
 					if(is_in_language(changes.state, input.substr(1), changes.stackTop + stack.substr(1)))
 						return true;
@@ -99,13 +99,16 @@ class NDPDA {
 		if( count > 0){
 			for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
 				changes = iter->second;
-				if(changes.state == finalState)
+				if(changes.state == finalState and input.empty()){
 					return true;
+				}
 				if(is_in_language(changes.state, input, changes.stackTop + stack.substr(1)))
 					return true;
 			}
 		}
 		
+		//cerr << "remaining input " << input << " ";
+		//cerr << state << ", " << input[0] << ", " << stack[0] << endl;
 		return false;
 	}
 	
