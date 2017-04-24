@@ -71,8 +71,7 @@ class NDPDA {
 		transitions.insert(PDA_func_pair(params(fromstate,input,stackTop),results(tostate,stackOperation)));
 	}
 	
-	bool is_in_language(string state, string input, string stack){
-		size_t count;
+	bool is_in_language(string state, string input, string stack/*, string derivation*/){
 		params args;
 		results changes;
 		multimap<params, results>::iterator iter, limit;
@@ -81,51 +80,37 @@ class NDPDA {
 			return false;
 			
 		if(state == finalState){
-			if(input.empty()){
-				cerr << "(" << state << ",L," << stack << ")";
+			if(input.empty()){/*
+				derivation = derivation+"("+state+",L,"+stack+") SUCCESS\n";
+				cerr << derivation;*/
 				return true;
-			}
-			else
+			}else
 				return false;
 		}
 		
-		if(! input.empty()){
-			args = params(state, input[0], stack[0]);
-			count = transitions.count(args);
-			if( count > 0){
-				for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
-					changes = iter->second;
-					
-					//cerr << "\t(" << changes.state << "," << input.substr(1) << "," << changes.stackTop + stack.substr(1) <<")\n";
-						
-					if(is_in_language(changes.state, string(input.substr(1)), changes.stackTop + stack.substr(1))){
-						cerr << "-|(" << state << "," << input << "," << stack << ")";
-						return true;
-					}
-				}
+		args = params(state, input[0], stack[0]);
+		for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
+			changes = iter->second;
+			if(is_in_language(changes.state, string(input.substr(1)), changes.stackTop + stack.substr(1)/*,derivation+"("+state+","+input+","+stack+")|-"*/)){
+				return true;
 			}
 		}
 		
 		args = params(state, lambda(), stack[0]);
-		count = transitions.count(args);
-		if( count > 0){
-			for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
-				changes = iter->second;
-				//cerr << "L\t(" << changes.state << "," << input << "," << changes.stackTop + stack.substr(1) <<")\n";
-
-				if(is_in_language(changes.state, input, changes.stackTop + stack.substr(1))){
-					cerr << "-|L(" << state << "," << input << "," << stack << ")";
-					return true;
-				}
+		for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
+			changes = iter->second;
+			if(is_in_language(changes.state, input, changes.stackTop + stack.substr(1)/*,derivation+"("+state+","+input+","+stack+")|-"*/)){
+				return true;
 			}
 		}
 		
-		//cerr << "<---\n";
+		/*derivation = derivation+"("+state+","+input+","+stack+") FAILED\n";
+		cerr << derivation;*/
 		return false;
 	}
 	
 	bool is_in_language(string input){
-		return is_in_language(startState, input, newStack());
+		return is_in_language(startState, input, newStack()/*, string()*/);
 	}
 	
 };

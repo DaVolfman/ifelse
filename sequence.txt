@@ -1,4 +1,6 @@
 ifififelse
 elseifif
 if{if}elseif{ifelse}
-ifelselse
+ifelseelse
+ifif{ifififelse}elseelse
+ifif{ifififelse}elseelseelse
