@@ -79,17 +79,29 @@ class NDPDA {
 		
 		if(state.empty() or stack.empty())
 			return false;
-
+			
+		if(state == finalState){
+			if(input.empty()){
+				cerr << "(" << state << ",L," << stack << ")";
+				return true;
+			}
+			else
+				return false;
+		}
+		
 		if(! input.empty()){
 			args = params(state, input[0], stack[0]);
 			count = transitions.count(args);
 			if( count > 0){
 				for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
 					changes = iter->second;
-					if(changes.state == finalState)
+					
+					//cerr << "\t(" << changes.state << "," << input.substr(1) << "," << changes.stackTop + stack.substr(1) <<")\n";
+						
+					if(is_in_language(changes.state, string(input.substr(1)), changes.stackTop + stack.substr(1))){
+						cerr << "-|(" << state << "," << input << "," << stack << ")";
 						return true;
-					if(is_in_language(changes.state, input.substr(1), changes.stackTop + stack.substr(1)))
-						return true;
+					}
 				}
 			}
 		}
@@ -99,16 +111,16 @@ class NDPDA {
 		if( count > 0){
 			for(iter = transitions.lower_bound(args); iter!= transitions.upper_bound(args); ++iter){
 				changes = iter->second;
-				if(changes.state == finalState and input.empty()){
+				//cerr << "L\t(" << changes.state << "," << input << "," << changes.stackTop + stack.substr(1) <<")\n";
+
+				if(is_in_language(changes.state, input, changes.stackTop + stack.substr(1))){
+					cerr << "-|L(" << state << "," << input << "," << stack << ")";
 					return true;
 				}
-				if(is_in_language(changes.state, input, changes.stackTop + stack.substr(1)))
-					return true;
 			}
 		}
 		
-		//cerr << "remaining input " << input << " ";
-		//cerr << state << ", " << input[0] << ", " << stack[0] << endl;
+		//cerr << "<---\n";
 		return false;
 	}
 	

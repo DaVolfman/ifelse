@@ -42,7 +42,7 @@ int main(int argc, char** argv){
 	myPDA.addTransitionFunction("q_1", '}', 'R', "q_1", NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_1", 'l', 'A', "q_1", NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_1", 's', 'B', "q_1", NDPDA::stackLambda());
-	myPDA.addTransitionFunction("q_1", 'E', 'C', "q_1", NDPDA::stackLambda());
+	myPDA.addTransitionFunction("q_1", 'e', 'C', "q_1", NDPDA::stackLambda());
 
 	myPDA.addTransitionFunction("q_1", NDPDA::lambda(), 'z', "q_f", "z");
 	
