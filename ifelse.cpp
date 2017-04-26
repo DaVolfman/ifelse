@@ -23,29 +23,28 @@ int main(int argc, char** argv){
 	myPDA.startState = "q_0";
 	myPDA.finalState = "q_f";
 	
-	myPDA.addTransitionFunction("q_0", NDPDA::lambda(), 'z', "q_1", "Sz");
+	myPDA.addTransitionFunction("q_0",'i','z',"if_1","z");
+	myPDA.addTransitionFunction("q_0",'i','I',"if_1","I");
+	myPDA.addTransitionFunction("q_0",'i','L',"if_1","L");
+	myPDA.addTransitionFunction("q_0",'e','I',"else_1","I");
+	myPDA.addTransitionFunction("q_0",'{','z',"q_0","Lz");
+	myPDA.addTransitionFunction("q_0",'{','I',"q_0","LI");
+	myPDA.addTransitionFunction("q_0",'}','L',"q_0",NDPDA::stackLambda());
+	myPDA.addTransitionFunction("q_0",'}','I',"discard",NDPDA::stackLambda());
+	myPDA.addTransitionFunction("q_0",NDPDA::lambda(),'z',"q_f","z");
+	myPDA.addTransitionFunction("q_0",NDPDA::lambda(),'I',"q_f",NDPDA::stackLambda());
+
+	myPDA.addTransitionFunction("if_1",'f','z',"q_0","Iz");
+	myPDA.addTransitionFunction("if_1",'f','I',"q_0","II");
+	myPDA.addTransitionFunction("if_1",'f','L',"q_0","IL");
 	
-	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "I");
-	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "IE");
-	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "IS");
-	myPDA.addTransitionFunction("q_1", 'i', 'S', "q_1", "IES");
-
-	myPDA.addTransitionFunction("q_1", 'f', 'I', "q_1", NDPDA::stackLambda());
-	myPDA.addTransitionFunction("q_1", 'f', 'I', "q_1", "S");
-	myPDA.addTransitionFunction("q_1", 'f', 'I', "q_1", "LSR");
-	myPDA.addTransitionFunction("q_1", 'f', 'I', "q_1", "LR");
-
-	myPDA.addTransitionFunction("q_1", 'e', 'E', "q_1", "ABC");
-	myPDA.addTransitionFunction("q_1", 'e', 'E', "q_1", "ABCS");
-	myPDA.addTransitionFunction("q_1", 'e', 'E', "q_1", "ABCLSR");
-
-	myPDA.addTransitionFunction("q_1", '{', 'L', "q_1", NDPDA::stackLambda());
-	myPDA.addTransitionFunction("q_1", '}', 'R', "q_1", NDPDA::stackLambda());
-	myPDA.addTransitionFunction("q_1", 'l', 'A', "q_1", NDPDA::stackLambda());
-	myPDA.addTransitionFunction("q_1", 's', 'B', "q_1", NDPDA::stackLambda());
-	myPDA.addTransitionFunction("q_1", 'e', 'C', "q_1", NDPDA::stackLambda());
-
-	myPDA.addTransitionFunction("q_1", NDPDA::lambda(), 'z', "q_f", "z");
+	myPDA.addTransitionFunction("else_1",'l','I',"else_2","I");
+	myPDA.addTransitionFunction("else_2",'s','I',"else_3","I");
+	myPDA.addTransitionFunction("else_3",'e','I',"q_0",NDPDA::stackLambda());
+	
+	myPDA.addTransitionFunction("discard",NDPDA::lambda(),'I',"discard",NDPDA::stackLambda());
+	myPDA.addTransitionFunction("discard",NDPDA::lambda(),'L',"q_0",NDPDA::stackLambda());
+	
 	
 	while( ! file.eof() ){
 		getline(file, expression);
