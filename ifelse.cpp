@@ -24,17 +24,20 @@ int main(int argc, char** argv){
 	myPDA.finalState = "q_f";
 	
 	myPDA.addTransitionFunction("q_0",'i','z',"if_1","z");
+	myPDA.addTransitionFunction("q_0",'i','S',"if_1","S");
 	myPDA.addTransitionFunction("q_0",'i','I',"if_1","I");
 	myPDA.addTransitionFunction("q_0",'i','L',"if_1","L");
 	myPDA.addTransitionFunction("q_0",'e','I',"else_1","I");
-	myPDA.addTransitionFunction("q_0",'{','z',"q_0","Lz");
+	myPDA.addTransitionFunction("q_0",'{','S',"q_0","LS");
 	myPDA.addTransitionFunction("q_0",'{','I',"q_0","LI");
 	myPDA.addTransitionFunction("q_0",'}','L',"q_0",NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_0",'}','I',"discard",NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_0",NDPDA::lambda(),'z',"q_f","z");
+	myPDA.addTransitionFunction("q_0",NDPDA::lambda(),'S',"q_f",NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_0",NDPDA::lambda(),'I',"q_f",NDPDA::stackLambda());
 
-	myPDA.addTransitionFunction("if_1",'f','z',"q_0","Iz");
+	myPDA.addTransitionFunction("if_1",'f','z',"q_0","ISz");
+	myPDA.addTransitionFunction("if_1",'f','S',"q_0","IS");
 	myPDA.addTransitionFunction("if_1",'f','I',"q_0","II");
 	myPDA.addTransitionFunction("if_1",'f','L',"q_0","IL");
 	
