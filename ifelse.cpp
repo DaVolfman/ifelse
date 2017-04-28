@@ -31,6 +31,7 @@ int main(int argc, char** argv){
 	myPDA.addTransitionFunction("q_0",'{','S',"q_0","LS");
 	myPDA.addTransitionFunction("q_0",'{','I',"q_0","LI");
 	myPDA.addTransitionFunction("q_0",'}','L',"q_0",NDPDA::stackLambda());
+	myPDA.addTransitionFunction("q_0",'}','S',"discard",NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_0",'}','I',"discard",NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_0",NDPDA::lambda(),'z',"q_f","z");
 	myPDA.addTransitionFunction("q_0",NDPDA::lambda(),'S',"q_f",NDPDA::stackLambda());
@@ -39,13 +40,14 @@ int main(int argc, char** argv){
 	myPDA.addTransitionFunction("if_1",'f','z',"q_0","ISz");
 	myPDA.addTransitionFunction("if_1",'f','S',"q_0","IS");
 	myPDA.addTransitionFunction("if_1",'f','I',"q_0","II");
-	myPDA.addTransitionFunction("if_1",'f','L',"q_0","IL");
+	myPDA.addTransitionFunction("if_1",'f','L',"q_0","ISL");
 	
 	myPDA.addTransitionFunction("else_1",'l','I',"else_2","I");
 	myPDA.addTransitionFunction("else_2",'s','I',"else_3","I");
 	myPDA.addTransitionFunction("else_3",'e','I',"q_0",NDPDA::stackLambda());
 	
 	myPDA.addTransitionFunction("discard",NDPDA::lambda(),'I',"discard",NDPDA::stackLambda());
+	myPDA.addTransitionFunction("discard",NDPDA::lambda(),'S',"discard",NDPDA::stackLambda());
 	myPDA.addTransitionFunction("discard",NDPDA::lambda(),'L',"q_0",NDPDA::stackLambda());
 	
 	

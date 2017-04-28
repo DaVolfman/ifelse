@@ -6,3 +6,5 @@ ifif{ifififelse}elseelse
 ifif{ifififelse}elseelseelse
 ifelse{if{}}if{}
 {ifelse{if{}}if{}}
+ifelse{ifelse{}}
+if{{ifelse{}}}
