@@ -9,4 +9,6 @@ ifelse{if{}}if{}
 ifelse{ifelse{}}
 if{{ifelse{}}}
 if{}else{}
+if{}else{}{}
+ifelse{}
 if{}{}

@@ -28,7 +28,7 @@ int main(int argc, char** argv){
 	myPDA.addTransitionFunction("q_0",'i','I',"if_1","I");
 	myPDA.addTransitionFunction("q_0",'i','L',"if_1","L");
 	myPDA.addTransitionFunction("q_0",'e','I',"else_1","I");
-	myPDA.addTransitionFunction("q_0",'{','S',"q_0","LS");
+	myPDA.addTransitionFunction("q_0",'{','S',"q_0","L");
 	myPDA.addTransitionFunction("q_0",'{','I',"q_0","LI");
 	myPDA.addTransitionFunction("q_0",'}','L',"q_0",NDPDA::stackLambda());
 	myPDA.addTransitionFunction("q_0",'}','S',"discard",NDPDA::stackLambda());
